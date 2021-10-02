@@ -37,3 +37,36 @@
 .flaticon-behance-logo:before { content: "\f105"; }
 .flaticon-dribbble:before { content: "\f106"; }
 .flaticon-themeforest:before { content: "\f107"; }
+.flaticon-hate:before { content: "\f100"; }
+
+
+@font-face {
+    font-family: "flaticon";
+    src: url("./flaticon.ttf?81eb6688fa1fcc672975a6e3e1178581") format("truetype"),
+url("./flaticon.woff?81eb6688fa1fcc672975a6e3e1178581") format("woff"),
+url("./flaticon.woff2?81eb6688fa1fcc672975a6e3e1178581") format("woff2"),
+url("./flaticon.eot?81eb6688fa1fcc672975a6e3e1178581#iefix") format("embedded-opentype"),
+url("./flaticon.svg?81eb6688fa1fcc672975a6e3e1178581#flaticon") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-network:before {
+    content: "\f101";
+}
+.flaticon-hate:before {
+    content: "\f102";
+}
+.flaticon-book:before {
+    content: "\f103";
+}
+
