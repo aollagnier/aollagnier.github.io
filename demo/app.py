@@ -109,6 +109,12 @@ def get_ngrams(df, threshold = 0.001, context_window = 2, top_n=10):
                 idx_inf = idx_sup -(top_n-len(ngrams_set))
     return ngrams_set
 
+def get_archive(file_path):
+    import zipfile
+
+    with zipfile.ZipFile(file_path, 'r') as zip_ref:
+        zip_ref.extractall(dir_mat)
+
 @app.route('/api/<string:lang>/<string:views>')
 def graph_generator(lang, views):
     import glob
@@ -140,6 +146,7 @@ def graph_generator(lang, views):
     
     if 'bert' in inData:
         if clustering_algo == 'kmeans' or clustering_algo == 'sc' : view_type = 'im'
+        get_archive(dir_mat+'EM-*bert.tar.gz')
         filename = glob.glob(dir_mat+'EM-*bert.csv')[0]
         data = pd.read_csv(filename,index_col=False,header=None)
         DX1 = data.values
@@ -148,6 +155,7 @@ def graph_generator(lang, views):
 
     if 'use' in inData:
         if clustering_algo == 'kmeans' or clustering_algo == 'sc' : view_type = 'vad'
+        get_archive(dir_mat+'EM-*use.tar.gz')
         filename = glob.glob(dir_mat+'EM-*use.csv')[0]
         data = pd.read_csv(filename, index_col=False,header=None)
         DX2 = data.values
@@ -156,6 +164,7 @@ def graph_generator(lang, views):
 
     if 'proB' in inData:
         if clustering_algo == 'kmeans' or clustering_algo == 'sc' : view_type = 'pro'
+        get_archive(dir_mat+'ProEM-*bert.tar.gz')
         filename = glob.glob(dir_mat+'ProEM-*bert.csv')[0]
         data = pd.read_csv(filename, index_col=False, header=None)
         DXX3 = np.array(data)
@@ -165,6 +174,7 @@ def graph_generator(lang, views):
 
     if 'proU' in inData:
         if clustering_algo == 'kmeans' or clustering_algo == 'sc' : view_type = 'pro'
+        get_archive(dir_mat+'ProEM-*use.tar.gz')
         filename = glob.glob(dir_mat+'ProEM-*use.csv')[0]
         data = pd.read_csv(filename, index_col=False, header=None)
         DXX4 = np.array(data)
@@ -174,6 +184,7 @@ def graph_generator(lang, views):
 
     if 'netB' in inData:
         if clustering_algo == 'kmeans' or clustering_algo == 'sc' : view_type = 'net'
+        get_archive(dir_mat+'FiltEM-*bert.tar.gz')
         filename = glob.glob(dir_mat+'FiltEM-*bert.csv')[0]
         data = pd.read_csv(filename, index_col=False, header=None)
         DXX5 = np.array(data)
@@ -183,6 +194,7 @@ def graph_generator(lang, views):
 
     if 'netU' in inData:
         if clustering_algo == 'kmeans' or clustering_algo == 'sc' : view_type = 'net'
+        get_archive(dir_mat+'FiltEM-*use.tar.gz')
         filename = glob.glob(dir_mat+'FiltEM-*use.csv')[0]
         data = pd.read_csv(filename, index_col=False, header=None)
         DXX6 = np.array(data)
@@ -194,13 +206,17 @@ def graph_generator(lang, views):
     if os.path.isfile(os.path.join('json', language, clustering_algo+'_'+'_'.join(inData)+'.json')):
         json_file = os.path.join('json', language, clustering_algo+'_'+'_'.join(inData)+'.json')
     else :
-        filename = glob.glob(dir_mat+'FiltEM-*bert.csv')[0]
+        get_archive(dir_mat+'FiltEM-*use.tar.gz')
+        filename = glob.glob(dir_mat+'FiltEM-*use.csv')[0]
         df = pd.read_csv(filename, index_col=False, header=None)
         G = nx.from_numpy_matrix(np.array(df))
         partition =  get_refined_partition(matrices, matrices_type, clustering_algo, view_type, k_clusters)
         tw_db['cluster_pred'] = partition
         tw_db.to_csv(os.path.join('labels', lang, clustering_algo+'_'+'_'.join(inData)+'.csv'))
         json_file = get_network(G, tw_db, partition, language, clustering_algo+'_'+'_'.join(inData))
+    
+    files_in_directory = os.listdir(dir_mat)
+    filtered_files = [file for file in files_in_directory if file.endswith(".csv")]
     return json_file
 
 
