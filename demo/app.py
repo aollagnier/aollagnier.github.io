@@ -70,7 +70,7 @@ def cleaning(doc):
 
 #     return sorted(sorted(Counter(instances).items(), key=itemgetter(0)), key=itemgetter(1), reverse=True)
 
-def get_ngrams(df, threshold = 0.001, context_window = 2, top_n=10):
+def get_ngrams(df, threshold = 0.001, context_window = 2, top_n=10, method = 'freq'):
     from nltk.util import ngrams
     from nltk.util import everygrams
     from sklearn.feature_extraction.text import TfidfVectorizer
@@ -87,7 +87,9 @@ def get_ngrams(df, threshold = 0.001, context_window = 2, top_n=10):
     # ngrams = string_set(sorting(filtered_bgrams))
     # return list((' '.join(k) for k, v in dict(frequencies).items() if k in ngrams))
     corpus = []
-    tfidf = TfidfVectorizer(ngram_range=(2, 3))
+
+    if method == 'freq': tfidf = TfidfVectorizer(ngram_range=(2, 3), min_df = 0.05, use_idf=False)
+    else: tfidf = TfidfVectorizer(ngram_range=(2, 3))
     
     for name, grouped_df in df.groupby(['cluster_pred']):
         corpus.append(' '.join(grouped_df['clean_tw'].values))
