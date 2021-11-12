@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <meta content="description" name="description">
+  <meta name="google" content="notranslate" />
+  <meta content="Mashup templates have been developped by Orson.io team" name="author">
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-icon-180x180.png">
+  <link href="./assets/favicon.ico" rel="icon">
+
+  <title>OTESIA project</title>  
+
+<link href="./main.d8e0d294.css" rel="stylesheet"></head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+
+.layer1, .layer2{
+	position: absolute;
+}
+
+.box {
+  /* important part */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.box select {
+  background-color: #0563af;
+  color: white;
+  padding: 12px;
+  width: 250px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+.box::before {
+  content: "\f13a";
+  font-family: FontAwesome;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.box:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+  padding: 30px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+</style>
+
+<body class="">
+    <link rel='stylesheet' href='d3v4-jobs-network_v3.css?0984'>
+    <link rel='stylesheet' href='custom_radio_botton_v1.css'>
+    <link rel='stylesheet' href='custom_dropdown.css'>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
+    <script type="text/javascript" src="d3v4-onet-jobs-network_v3.js?4832"></script>
+    <script type="text/javascript" src="d3v4-dwp-jobs-network_v3.js?9372"></script>
+    <script type="text/javascript" src="get-jobs-network_v3.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-graph.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-data-adapter.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+    <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+
+<!-- Add your content of header -->
+<div class="background-color-layer" style="background-image: url('assets/images/network-gd9adb2d25_1920.jpg');"
+></div>
+<main class="content-wrapper">
+  <header class="white-text-container section-container">
+    <div class="text-center">
+      <h1> Fine-Grained Hate Speech Community Detection </h1>
+      <p>Twitter communities</p>
+      <p>
+        <a class="fa-icon fa-icon-2x" href="https://github.com/aollagnier" title="">
+          <i class="fa fa-github"></i>
+        </a>
+        <a class="fa-icon fa-icon-2x" href="https://gitlab.com/ollagnier81" title="">
+          <i class="fa fa-gitlab"></i>
+        </a>
+	<a href="mailto:anais.ollagnier@inria.fr">
+          <i class="fa fa-envelope"></i>
+        </a>
+      </p>
+    </div>
+  </header>
+
+<!-- Add your site or app content here -->
+<div class="container">
+  <div class="row" style=" position: relative;">
+    <div class="col-xs-12">
+      
+      <div class="card">
+        <div class="card-block">
+          <h2>Parameters</h2>
+          <form id="link"></form>
+            <div class="grid-container">
+              <div class="grid-child purple">
+                <label for="standard-select" ><h3 class="h5 date-title">Language</h3></label>
+              </div>
+          
+              <div class="grid-child green">
+                <select id="standard-select">
+                  <option value="lg">Select a language</option>
+                  <option value="en">English</option>
+                  <option value="fr">French</option>
+                </select>
+              </div>
+            </div>
+        
+            <div class="grid-container">
+              <div class="grid-child purple">
+                <label for="multi-select"><h3 class="h5 date-title">Configuration</h3></label>
+              </div>
+              
+              <div class="grid-child green">
+                <select id="multi-select">
+                  <option value="conf">Select a configuration</option>
+                  <option value="kmeans-bert">{KM view mBERT}</option>
+                  <option value="kmeans-bert">{KM view mBERT}</option>
+                  <option value="kmeans-use">{KM view mUSE}</option>
+                  <option value="kmeans-proB">{KM view mBERT-PRO}</option>
+                  <option value="kmeans-proU">{KM view mUSE-PRO}</option>
+                  <option value="sc-bert">{SC view mBERT}</option>
+                  <option value="sc-use">{SC view mUSE}</option>
+                  <option value="sc-proB">{SC view mBERT-PRO}</option>
+                  <option value="sc-proU">{SC view mUSE-PRO}</option>
+                  <option value="mvsc-use_proB">{mUSE/mBERT-PRO}</option>
+                  <option value="mvsc-proB_proU">{mBERT-PRO/mUSE-PRO}</option>
+                  <option value="mvsc-bert_use_proU">{mBERT/mUSE/mUSE-PRO}</option>
+                </select>
+              </div>
+            </div>
+          
+            <input class="SubmitButton" type="submit" name="SUBMITBUTTON" value="Submit" style="font-size:20px; "/>
+          </form>
+        </div>
+      </div>
+
+
+<!-- Add your site or app content here -->
+ 
+                                        <!--['{KM view mBERT}', '{KM view mUSE}', '{KM view mBERT-PRO}', '{KM view mUSE-PRO}', '{KM view mBERT-NET}', '{KM view mUSE-NET}', 
+           '{SC view mBERT}', '{SC view mUSE}', '{SC view mBERT-PRO}', '{SC view mUSE-PRO}', '{SC view mBERT-NET}', '{SC view mUSE-NET}', 
+           '{mUSE/mBERT-PRO}', '{mBERT-PRO/mUSE-PRO}', '{mBERT/mUSE/mUSE-PRO}', '{mUSE/mBERT-PRO/mUSE-PRO}', '{mBERT-PRO/mUSE-PRO/mBERT-NET}', 
+                '{mUSE/mBERT-PRO/mUSE-PRO/mUSE-NET}', '{mBERT-PRO/mUSE-PRO/mBERT-NET/mUSE-NET}', '{mUSE/mBERT-PRO/mUSE-PRO/mBERT-NET/mUSE-NET}'] -->
+	<!--
+        <div class="card">
+          <div class="card-block">
+            <h2>Projects</h2>
+            <div class="row">
+              <div class="col-md-4">
+                <img src="./assets/images/img-02.jpg" class="img-responsive" alt="">
+                <h3 class="h5">Amelia App</h3>
+                <p>June 2017</p>
+              </div>
+              <div class="col-md-4">
+                <img src="./assets/images/img-03.jpg" class="img-responsive" alt="">
+                <h3 class="h5">Portland</h3>
+                <p>March 2017</p>
+              </div>
+              <div class="col-md-4">
+                <img src="./assets/images/img-04.jpg" class="img-responsive" alt="">
+                <h3 class="h5">Denz for Nilon</h3>
+                <p>Jan 2017</p>
+              </div>
+            </div>
+          </div>
+	</div> 
+
+
+        <div class="card">
+          <div class="card-block">
+            <h2>Work</h2>
+            <div class="work-experience">
+              <small class="date">2017-2015</small>
+              <h3 class="h5 date-title">Web developer - <a href="http://en.orson.io" title="Create professionnal website">Orson.io</a></h3>
+              
+
+              <p>Leo vel orci porta non pulvinar neque laoreet suspendisse interdum. Vitae ultricies leo integer malesuada nunc. Imperdiet proin fermentum leo vel orci porta non pulvinar neque. Fermentum leo vel orci porta non. Posuere sollicitudin aliquam ultrices sagittis. Aliquam faucibus purus in massa tempor nec.</p>
+            </div>
+
+            <div class="work-experience">
+              <small class="date">2017-2015</small>
+              <h3 class="h5 date-title">Web developer - <a href="http://mashup-template.com" title="">Mashup Template</a></h3>
+              
+              <p>Fermentum leo vel orci porta non. Posuere sollicitudin aliquam ultrices sagittis. Aliquam faucibus purus in massa tempor nec.</p>
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="card">
+          <div class="card-block">
+            <h2>Education</h2>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="education-experience">
+                  <small class="date">2017-2015</small>
+                  <h3 class="h5 date-title">Design Master</h3>
+                  <p>Chicago University</p>
+                </div>
+                
+              </div>
+              <div class="col-md-4">
+                <div class="education-experience">
+                  <small class="date">2015-2012</small>
+                  <h3 class="h5 date-title">Metrics Degree</h3>
+                  <p>Ecole 87</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="education-experience">
+                  <small class="date">2012-2011</small>
+                  <h3 class="h5 date-title">Motion Design Course</h3>
+                  <p>Pascal’s Lee Studio</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-block">
+            <h2>Language</h2>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="language-experience">
+                  <h3 class="h5">English  <small>Bilingual</small></h3>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="language-experience">
+                  <h3 class="h5">French  <small>Fluent</small></h3>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="language-experience">
+                  <h3 class="h5">Russian  <small>Beginner</small></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+	-->
+  
+  <div class="card">
+    <div class="card-block">
+      <h2>Network Projection</h2>
+      <div id="d3_fd_network"  style="padding:0px; height:700px; "></div>
+
+	    <!--
+	    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            
+
+            <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                <img src="./assets/images/img-05.jpg" class="img-responsive" alt="...">
+                <div class="carousel-caption">
+                  <h3 class="h5">Jules for Bastion</h3>
+                  <p>2017</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="./assets/images/img-06.jpg" class="img-responsive" alt="...">
+                <div class="carousel-caption">
+                  <h3 class="h5">Jules for Bastion</h3>
+                  <p>2017</p>
+                </div>
+              </div>
+
+              <div class="item">
+                <img src="./assets/images/img-08.jpg" class="img-responsive" alt="...">
+                <div class="carousel-caption">
+                  <h3 class="h5">Jules for Bastion</h3>
+                  <p>2017</p>
+                </div>
+              </div>
+            </div>
+
+            <ol class="carousel-indicators">
+              <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>
+
+	    </div> -->
+    </div>
+  </div>
+
+	<div class="card" id='community_div' style="display:none; margin-top: 2em;">
+          <div class="card-block">
+            <h2 id='community_title'></h2>
+            <h3 id='toto'></h3>
+            <p>Textual properties:</p>
+            <ul id="ngrams" style="columns: 2;-webkit-columns: 2;-moz-columns: 2;"></ul>
+            <p>To get further information about the hate speech communities: [<a href="./publications/1908.11049.pdf" target="_blank">PDF</a>]</p>
+          </div>
+  </div>
+</div>
+</div>
+
+	<!--        
+        <div class="card">
+          <div class="card-block">
+            <h2>Social Network</h2>
+            <div class="row">
+              <div class="col-md-3">
+                <p class="social-buttons"><a href="https://twitter.com/" title=""><span class="social-round-icon fa-icon"><i class="fa fa-twitter"></i></span>@David_Folley</a></p>
+              </div>
+              <div class="col-md-3">
+                <p class="social-buttons"><a href="https://www.linkedin.com/" title=""><span class="social-round-icon fa-icon"><i class="fa fa-linkedin"></i></span>David Folley</a></p>
+              </div>
+              <div class="col-md-3">
+                <p class="social-buttons"><a href="https://dribbble.com/" title=""><span class="social-round-icon fa-icon"><i class="fa fa-dribbble"></i></span>David Folley</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-block">
+            <h2>Contact</h2>
+            <form action="" class="reveal-content">
+              <div class="form-group">
+                <input type="email" class="form-control" id="email" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="subject" placeholder="Subject">
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" rows="5" placeholder="Enter your message"></textarea>
+              </div>
+              <div class="form-group">
+                <button type="submit" class=" btn btn-primary">Send message</button>
+              </div> 
+            </form>
+          </div>
+        </div>
+       
+     </div>
+   </div>
+ </div>
+	-->
+
+</main>
+<footer class="footer-container white-text-container text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p><img src="./assets/images/mashup-icon.svg" alt=""></p>
+        
+        <p>© Copyright Anaïs Ollagnier. Design <a href="http://www.mashup-template.com/" title="Create website with free html template">Mashup Template</a>/<a href="https://unsplash.com/" title="Beautiful Free Images">Unsplash</a></p>
+        <!--
+	<p>
+          <a class="fa-icon fa-icon-2x" href="https://facebook.com/" title="">
+            <i class="fa fa-facebook"></i>
+          </a>
+          <a class="fa-icon fa-icon-2x" href="https://twitter.com/" title="">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <a class="fa-icon fa-icon-2x" href="https://dribbble.com/" title="">
+            <i class="fa fa-dribbble"></i>
+          </a>
+          <a class="fa-icon fa-icon-2x" href="https://www.linkedin.com/" title="">
+            <i class="fa fa-linkedin"></i>
+          </a>
+          <a class="fa-icon fa-icon-2x" href="https://vimeo.com/" title="">
+            <i class="fa fa-vimeo"></i>
+          </a>
+        </p>
+	-->
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+var onet_jobs_network_file = 'use_embedding_off.json';
+
+var width = 1060, height = 500;
+var svg = d3.select("#d3_fd_network").append("svg")
+.attr("width", width)
+.attr("height", height);
+
+d3.json(onet_jobs_network_file, function (error, graph) {
+  if (!error) {
+    console.log('file', onet_jobs_network_file);
+    console.log('graph', graph);
+    createJobsNetwork_onet(svg, graph);
+  } else {
+    console.error(error);
+  }
+});
+
+$('.SubmitButton').click(function(){
+  var lang = $('#standard-select :selected').val();
+  var views = $('#multi-select :selected').val();
+  call_api(lang, views);
+});
+
+// var lang = 'french'
+// var views = 'sc-bert'
+// var select_lang = document.getElementById("standard-select");
+// select_lang.addEventListener('change', (event) => {
+//   console.log(event.target.value);
+//   lang = event.target.value;
+//   call_api(lang, views);
+// });
+
+// var select_views = document.getElementById("multi-select");
+// select_views.addEventListener('change', (event) => {
+//   console.log(event.target.value);
+//   views = event.target.value;
+//   call_api(lang,views);
+// });
+
+async function call_api(lang,views){
+  console.log(lang,views);
+  await fetch('http://127.0.0.1:5000/api/'+lang+'/'+views)
+  .then(function(response) {
+    return response.text().then(function(text) {
+      onet_jobs_network_file = text;
+    });
+  })
+  
+  d3.json(onet_jobs_network_file, function (error, graph) {
+    if (!error) {
+      console.log('file', onet_jobs_network_file);
+      console.log('graph', graph);
+      createJobsNetwork_onet(svg, graph);
+    } else {
+      console.error(error);
+    }
+  });
+}
+
+</script>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID 
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-XXXXX-X', 'auto');
+  ga('send', 'pageview');
+</script>
+
+--><script type="text/javascript" src="./main.bc58148c.js"></script>
+
+</body>
+</html>
