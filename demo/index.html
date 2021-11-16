@@ -450,7 +450,7 @@ $('.SubmitButton').click(function(){
 async function call_api(lang,views){
   console.log(lang,views);
   //await fetch('http://127.0.0.1:5000/api/'+lang+'/'+views)
-  await fetch('http://aollagnier.github.io/api/'+lang+'/'+views)
+  await fetch('https://aollagnier.github.io/api/'+lang+'/'+views)
   .then(function(response) {
     return response.text().then(function(text) {
       onet_jobs_network_file = text;
