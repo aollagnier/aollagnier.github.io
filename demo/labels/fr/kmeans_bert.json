@@ -1,0 +1,156 @@
+{
+  "nodes": [
+    {
+      "id": 10,
+      "tweet": "arabe",
+      "group": 0
+    },
+    {
+      "id": 40,
+      "tweet": "sale",
+      "group": 0
+    },
+    {
+      "id": 22,
+      "tweet": "fait",
+      "group": 0
+    },
+    {
+      "id": 32,
+      "tweet": "mongol",
+      "group": 0
+    },
+    {
+      "id": 13,
+      "tweet": "renois",
+      "group": 0
+    },
+    {
+      "id": 14,
+      "tweet": "traite",
+      "group": 0
+    },
+    {
+      "id": 25,
+      "tweet": "r\u00e9aliser",
+      "group": 0
+    },
+    {
+      "id": 30,
+      "tweet": "noir",
+      "group": 0
+    },
+    {
+      "id": 31,
+      "tweet": "number",
+      "group": 0
+    },
+    {
+      "id": 16,
+      "tweet": "rencontre",
+      "group": 0
+    },
+    {
+      "id": 27,
+      "tweet": "\u00e9leveur",
+      "group": 0
+    },
+    {
+      "id": 12,
+      "tweet": "voici",
+      "group": 0
+    }
+  ],
+  "links": [
+    {
+      "source": 10,
+      "target": 40,
+      "value": 2
+    },
+    {
+      "source": 10,
+      "target": 30,
+      "value": 2
+    },
+    {
+      "source": 10,
+      "target": 14,
+      "value": 2
+    },
+    {
+      "source": 10,
+      "target": 10,
+      "value": 1
+    },
+    {
+      "source": 40,
+      "target": 30,
+      "value": 2
+    },
+    {
+      "source": 40,
+      "target": 40,
+      "value": 1
+    },
+    {
+      "source": 40,
+      "target": 14,
+      "value": 1
+    },
+    {
+      "source": 22,
+      "target": 25,
+      "value": 2
+    },
+    {
+      "source": 22,
+      "target": 32,
+      "value": 2
+    },
+    {
+      "source": 22,
+      "target": 27,
+      "value": 1
+    },
+    {
+      "source": 32,
+      "target": 27,
+      "value": 2
+    },
+    {
+      "source": 32,
+      "target": 25,
+      "value": 1
+    },
+    {
+      "source": 32,
+      "target": 16,
+      "value": 1
+    },
+    {
+      "source": 13,
+      "target": 31,
+      "value": 2
+    },
+    {
+      "source": 31,
+      "target": 31,
+      "value": 2
+    },
+    {
+      "source": 16,
+      "target": 27,
+      "value": 2
+    },
+    {
+      "source": 16,
+      "target": 12,
+      "value": 2
+    },
+    {
+      "source": 27,
+      "target": 12,
+      "value": 1
+    }
+  ]
+}
