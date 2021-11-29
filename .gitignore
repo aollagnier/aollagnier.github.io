@@ -1,0 +1,15 @@
+
+demo/matrices/word_mat.csv
+demo/matrices/test.csv
+demo/labels/clustering_distri_ENBEST.csv
+demo/labels/clustering_distri_FRBEST.csv
+demo/labels/fr/kmeans_bert_13.json
+demo/labels/fr/kmeans_bert_2.json
+demo/labels/fr/kmeans_bert_3.json
+demo/labels/fr/kmeans_bert_4.json
+demo/labels/fr/kmeans_bert_6.json
+demo/matrices/EM-mat_em-bert_fr.csv
+demo/matrices/EM-mat_im_en.csv
+demo/matrices/EM-mat_im_fr.csv
+demo/matrices/EM-mat_vad_en.csv
+demo/matrices/EM-mat_vad_fr.csv
