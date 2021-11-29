@@ -12,8 +12,8 @@
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
   
-  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-icon-180x180.png">
-  <link href="./assets/favicon.ico" rel="icon">
+  <!-- link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-icon-180x180.png">
+  <link href="./assets/favicon.ico" rel="icon"-->
 
   <title>OTESIA project</title>  
 
@@ -88,6 +88,7 @@
     <script type="text/javascript" src="d3v4-onet-jobs-network_v3.js?4832"></script>
     <script type="text/javascript" src="d3v4-dwp-jobs-network_v3.js?9372"></script>
     <script type="text/javascript" src="get-jobs-network_v3.js"></script>
+    <script type="text/javascript" src="d3v4-words-network.js"></script>
     <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
     <script src="https://cdn.anychart.com/releases/v8/js/anychart-graph.min.js"></script>
     <script src="https://cdn.anychart.com/releases/v8/js/anychart-data-adapter.min.js"></script>
@@ -103,6 +104,7 @@
   <header class="white-text-container section-container">
     <div class="text-center">
       <h1> Fine-Grained Hate Speech Community Detection </h1>
+
       <p>Twitter communities</p>
       <p>
         <a class="fa-icon fa-icon-2x" href="https://github.com/aollagnier" title="">
@@ -149,7 +151,6 @@
               <div class="grid-child green">
                 <select id="multi-select">
                   <option value="conf">Select a configuration</option>
-                  <option value="kmeans-bert">{KM view mBERT}</option>
                   <option value="kmeans-bert">{KM view mBERT}</option>
                   <option value="kmeans-use">{KM view mUSE}</option>
                   <option value="kmeans-proB">{KM view mBERT-PRO}</option>
@@ -322,13 +323,40 @@
   </div>
 
 	<div class="card" id='community_div' style="display:none; margin-top: 2em;">
-          <div class="card-block">
-            <h2 id='community_title'></h2>
-            <h3 id='toto'></h3>
-            <p>Textual properties:</p>
-            <ul id="ngrams" style="columns: 2;-webkit-columns: 2;-moz-columns: 2;"></ul>
-            <p>To get further information about the hate speech communities: [<a href="./publications/1908.11049.pdf" target="_blank">PDF</a>]</p>
-          </div>
+    <div class="card-block">
+      <h2 id='community_title'></h2>
+      <h3 id='toto'></h3>
+      <label for="pet-select">Choose a method:</label>
+      <select name="pets" id="method-select">
+        <option value="">--Please choose an option--</option>
+        <option value="freq">Frequency</option>
+        <option value="tfidf">TF-IDF</option>
+        <!--
+        <option value="pearson">Pearson's correlation</option>
+        <option value="pmi">PMI</option>
+        -->
+      </select>
+
+      <p>Textual properties:</p>
+      <ul id="ngrams" style="columns: 2;-webkit-columns: 2;-moz-columns: 2;"></ul>
+      <p>To get further information about the hate speech communities: [<a href="./publications/1908.11049.pdf" target="_blank">PDF</a>]</p>
+      <!-- <form onsubmit="return words_graph();return false">
+        
+        <input type="hidden" id='tototo' type="text"/>
+        <input id="subsub" type="submit" value="Visualize" />
+      </form> -->
+      <form onsubmit="words_graph();return false">
+        <input type="hidden" id='tototo' type="text"/>
+        <input type="submit" value="Visualize"/>
+      </form>
+    
+    </div>
+    
+    <div class="card-block">
+            <h2>Semantic space Projection</h2>
+            <div>BLABLA</div>
+            <div id="network_words"  style="padding:0px; height:200px; ">blibli</div>
+    </div>
   </div>
 </div>
 </div>
@@ -427,8 +455,11 @@ d3.json(onet_jobs_network_file, function (error, graph) {
 
 $('.SubmitButton').click(function(){
   var lang = $('#standard-select :selected').val();
+  //var lang = 'fr'
   var views = $('#multi-select :selected').val();
+  //var views = 'kmeans-bert'
   call_api(lang, views);
+
 });
 
 // var lang = 'french'
@@ -447,13 +478,16 @@ $('.SubmitButton').click(function(){
 //   call_api(lang,views);
 // });
 
+var method = $('#method-select :selected').val();
+
 async function call_api(lang,views){
   console.log(lang,views);
-  //await fetch('http://127.0.0.1:5000/api/'+lang+'/'+views)
-  await fetch('https://aollagnier.github.io/api/'+lang+'/'+views)
+  await fetch('http://127.0.0.1:5000/api/'+lang+'/'+views)
+  //await fetch('https://aollagnier.github.io/api/'+lang+'/'+views)
   .then(function(response) {
     return response.text().then(function(text) {
-      onet_jobs_network_file = text;
+      //onet_jobs_network_file = text;
+      onet_jobs_network_file ='use_embedding_off.json';
     });
   })
   
@@ -467,6 +501,40 @@ async function call_api(lang,views){
     }
   });
 }
+
+//var totoSelector = document.getElementById('tototo').onChange
+//totoSelector.onchange(e => console.log(e))
+// console.log(totoSelector)
+
+var svg2 = d3.select("#d3_fd_network_words").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+async function words_graph() {
+   words_file = document.getElementById('tototo').value;
+   console.log(words_file);
+
+  d3.json(words_file, function (error, graph2) {
+      if (!error) {
+        console.log('file ++', words_file);
+        console.log('graph', graph2);
+        createWordsNetwork(svg2, graph2);
+      } else {
+        console.error(error);
+      }
+    });
+ }
+//   var totoSelector = document.getElementById('tototo')
+//   console.log(event)
+//   console.log('totoSelector.value')
+//   console.log(totoSelector.value)
+// }
+// totoSelector.addEventListener('change', (event) => {
+//   console.log(event)
+//   console.log('totoSelector.value')
+//   console.log(totoSelector.value)
+// })
+
 
 </script>
 
