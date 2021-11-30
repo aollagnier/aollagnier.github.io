@@ -354,8 +354,7 @@
     
     <div class="card-block">
             <h2>Semantic space Projection</h2>
-            <div>BLABLA</div>
-            <div id="network_words"  style="padding:0px; height:200px; ">blibli</div>
+            <div id="network_words"  style="padding:0px; height:200px; "></div>
     </div>
   </div>
 </div>
@@ -486,8 +485,8 @@ async function call_api(lang,views){
   //await fetch('https://aollagnier.github.io/api/'+lang+'/'+views)
   .then(function(response) {
     return response.text().then(function(text) {
-      //onet_jobs_network_file = text;
-      onet_jobs_network_file ='use_embedding_off.json';
+      onet_jobs_network_file = text;
+      //onet_jobs_network_file ='use_embedding_off.json';
     });
   })
   
@@ -506,7 +505,7 @@ async function call_api(lang,views){
 //totoSelector.onchange(e => console.log(e))
 // console.log(totoSelector)
 
-var svg2 = d3.select("#d3_fd_network_words").append("svg")
+var svg2 = d3.select("#network_words").append("svg")
     .attr("width", width)
     .attr("height", height);
 

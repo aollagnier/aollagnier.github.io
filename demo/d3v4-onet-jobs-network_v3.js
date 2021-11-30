@@ -1,17 +1,14 @@
 function createJobsNetwork_onet(svg, graph) {
     d3v4 = d3;
 
-    let parentWidth = d3v4.select('svg').node().parentNode.clientWidth;
-    let parentHeight = d3v4.select('svg').node().parentNode.clientHeight;
-
-    var svg = d3v4.select('svg')
-        .attr('width', parentWidth)
-        .attr('height', parentHeight)
+    let parentWidth = svg.node().parentNode.clientWidth;
+    let parentHeight = svg.node().parentNode.clientHeight;
 
     // Define the div for the tooltip
     var div = d3.select("#d3_fd_network").append("div")	
         .attr("class", "tooltip")				
         .style("opacity", 0);
+
 
     // remove any previous graphs
     svg.selectAll('.g-main').remove();
@@ -62,11 +59,12 @@ function createJobsNetwork_onet(svg, graph) {
         .attr("class", "link")
         .selectAll("line")
         .data(links)
-        .enter().append("line");
+        .enter().append("line")
+        .classed('node-links', true);
         //.attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
     var default_node_size_onet = 6,
-        default_node_size_over = 10;
+        default_node_size_over = 8;
     
 
     var node = gDraw.append("g")
@@ -76,6 +74,7 @@ function createJobsNetwork_onet(svg, graph) {
         .enter().append("g");
 
     node.append("circle")
+        .classed('node', true)
         .attr("r", function(d) {
             if ('size' in d)
                 return d.size;
@@ -103,18 +102,31 @@ function createJobsNetwork_onet(svg, graph) {
     //.on("click", click_node)
 
 	.on("click",function(d,i){
-        node.select("circle")
+        d3.select(this)
         .attr("r", function(d){return default_node_size_onet})
         .style("stroke", function(d) {return color(d.group)});
 
+        let neighbors = links.filter(e => e.source.index === d.index || e.target.index === d.index).map(e => e.source.index === d.index ? e.target.index : e.source.index)
+        console.log(neighbors)
+        d3.selectAll('circle.node')
+            .style('opacity', e => { return e.index === d.index || neighbors.includes(e.index) ? 1 : 0.2})
+
+        d3.selectAll('.node-links')
+            .style('opacity', e => e.source.index === d.index || e.target.index === d.index ? 1 : 0.1)
+            .style('stroke', e => e.source.index === d.index || e.target.index === d.index ? '#000' : '#f5f5f5')
+
         var selector = document.getElementById('community_div');
         selector.style.display="block";
-        
+        d.group = 4;
         fetch('http://127.0.0.1:5000/api/characterization/'+d.group)
         .then(async function(response) {
             const text = await response.text();
             console.log(text);
             data = JSON.parse(text);
+            var jsontoto = data['json']
+
+            document.getElementById('tototo').value = ''
+            document.getElementById('tototo').value = jsontoto
             
             document.getElementById("community_title").innerHTML = data['head'];
 
@@ -129,7 +141,7 @@ function createJobsNetwork_onet(svg, graph) {
 
         })
         
-        nodeGrowing(d);
+        //nodeGrowing(d);
     })
         .on("mouseover", function(d,i) {
             var match_score = "";

@@ -1,12 +1,10 @@
 function createWordsNetwork(svg, graph) {
     d3v4 = d3;
 
-    let parentWidth = d3v4.select('svg').node().parentNode.clientWidth;
-    let parentHeight = d3v4.select('svg').node().parentNode.clientHeight;
+    let parentWidth = svg.node().parentNode.clientWidth;
+    let parentHeight = svg.node().parentNode.clientHeight;
 
-    var svg = d3v4.select('svg')
-        .attr('width', parentWidth)
-        .attr('height', parentHeight)
+    
 
     // Define the div for the tooltip
     var div = d3.select("#network_words").append("div")	
@@ -64,11 +62,29 @@ function createWordsNetwork(svg, graph) {
         .attr("class", "link")
         .selectAll("line")
         .data(links)
-        .enter().append("line");
+        .enter().append("line")
+        .classed('node-links', true);
+
+
         //.attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
     var default_node_size_onet = 6,
         default_node_size_over = 10;
+
+    graph.links.forEach(function(link){
+
+        // initialize a new property on the node
+        if (!link.source["linkCount"]) link.source["linkCount"] = 0; 
+        if (!link.target["linkCount"]) link.target["linkCount"] = 0;
+        
+        // count it up
+        link.source["linkCount"]++;
+        link.target["linkCount"]++;    
+        });
+
+    let sizeScale = d3.scaleLinear()
+        .domain(d3.extent(graph.nodes, d => d.linkCount))
+        .range([5, 20])
     
     var node = gDraw.append("g")
         .attr("class", "node")
@@ -80,12 +96,13 @@ function createWordsNetwork(svg, graph) {
         .enter().append("g");
 
     node.append("circle")
-        .attr("r", function(d) {
-            if ('size' in d)
-                return d.size;
-            else
-                return default_node_size_onet;
-        })
+        //.attr("r", function(d) {
+         //   if ('size' in d)
+          //      return d.size;
+          //  else
+            //    return default_node_size_onet;
+        //})
+        .attr('r', d => sizeScale(d.linkCount))
         .attr("fill", function(d) {
             if ('color' in d)
                 return d.color;
@@ -107,37 +124,18 @@ function createWordsNetwork(svg, graph) {
     //.on("click", click_node)
 
 	.on("click",function(d,i){
-        node.select("circle")
+        d3.select(this)
         .attr("r", function(d){return default_node_size_onet})
         .style("stroke", function(d) {return color(d.group)});
 
-        // var selector = document.getElementById('community_div');
-        // selector.style.display="block";
-        // d.group = 4;
-        // fetch('http://127.0.0.1:5000/api/characterization/'+d.group)
-        // .then(async function(response) {
-        //     const text = await response.text();
-        //     console.log(text);
-        //     data = JSON.parse(text);
-        //     var jsontoto = data['json']
+        let neighbors = links.filter(e => e.source.index === d.index || e.target.index === d.index).map(e => e.source.index === d.index ? e.target.index : e.source.index)
+        console.log(neighbors)
+        d3.selectAll('circle.node')
+            .style('opacity', e => { return e.index === d.index || neighbors.includes(e.index) ? 1 : 0.2})
 
-        //     document.getElementById('tototo').value = ''
-        //     document.getElementById('tototo').value = jsontoto
-            
-        //     document.getElementById("community_title").innerHTML = data['head'];
-
-        //     var ul = document.getElementById("ngrams");
-        //     ul.innerHTML = "";
-
-        //     for (let i of data['ngrams']) {
-        //         let li = document.createElement("li");
-        //         li.innerHTML = i;
-        //         ul.appendChild(li);
-        //     }
-
-        // })
-        
-        nodeGrowing(d);
+        d3.selectAll('.node-links')
+            .style('opacity', e => e.source.index === d.index || e.target.index === d.index ? 1 : 0.1)
+            .style('stroke', e => e.source.index === d.index || e.target.index === d.index ? '#000' : '#f5f5f5')
     })
         .on("mouseover", function(d,i) {
             var match_score = "";
@@ -145,8 +143,7 @@ function createWordsNetwork(svg, graph) {
                 //match_score = "<br/>" + d.weight + " %";
             
             d3v4.select(this)
-                .transition()
-                .attr("r", default_node_size_over);
+                .transition();
                 
             div.transition()
                 .duration(500)		
@@ -166,13 +163,7 @@ function createWordsNetwork(svg, graph) {
             if (!d3v4.select(this).classed("network-selected")) {
                 d3v4.select(this)
                 .transition()
-                .duration(1000)
-                .attr("r", function(d){
-                    if ('size' in d)
-                        return d.size;
-                    else 
-                        return default_node_size_onet;
-                });
+                .duration(1000);
             }
             div.transition()
                 .duration(500)
@@ -237,47 +228,5 @@ function createWordsNetwork(svg, graph) {
             d3.select(this).transition().attr("class", "noselected");
         }
     }
-
-    function nodeGrowing(d) {
-        
-        var nodeNeighbors = links.filter(function(link) { 
-            // Filter the list of links to only those links that have our target
-            // node as a source or target
-            return link.source.index === d.index || link.target.index === d.index;})
-        
-        .map(function(link) {
-            // Map the list of links to a simple array of the neighboring indices - this is
-            // technically not required but makes the code below simpler because we can use
-            // indexOf instead of iterating and searching ourselves.
-            return link.source.index === d.index ? link.target.index : link.source.index; });
-
-        // Reset all circles - we will do this in mouseout also
-        //svg.selectAll('circle').style('stroke', 'pink');
-
-        // now we select the neighboring circles and apply whatever style we want.
-        // Note that we could also filter a selection of links in this way if we want to
-        // Highlight those as well
-        svg.selectAll('circle').filter(function(node) {
-            // I filter the selection of all circles to only those that hold a node with an
-            // index in my listg of neighbors
-            return nodeNeighbors.indexOf(node.index) > -1;
-        })
-        .attr("r", 12)
-        .transition()
-        .duration(10);
-    }
-
-    graph.links.forEach(function(link){
-
-        // initialize a new property on the node
-        if (!link.source["linkCount"]) link.source["linkCount"] = 0; 
-        if (!link.target["linkCount"]) link.target["linkCount"] = 0;
-      
-        // count it up
-        link.source["linkCount"]++;
-        link.target["linkCount"]++;    
-      });
-      
-    
     return graph;
 };
