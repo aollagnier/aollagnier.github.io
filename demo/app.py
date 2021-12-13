@@ -14,15 +14,13 @@ CORS(app)
 language = ''
 config = ''
 
-@app.route('/api/characterization/<string:group>/<string:ngrams_method>')
-def charaterization(group, ngrams_method):
-    from collections import Counter
+@app.route('/api/characterization/<string:group>')
+def charaterization(group):
     views = config.split('-')
     clustering_algo = views[0]
 
     if '_' in views[1]: inData = views[1]
     else:   inData = views[1].split('_')
-    print('***', ngrams_method)
 
     group = int(group)
     #if '_' in views[1]: df = pd.read_csv(os.path.join('labels', language, clustering_algo+'_'+''.join(inData)+'.csv'), index_col=False)
@@ -33,66 +31,11 @@ def charaterization(group, ngrams_method):
     grouped_df =  df[df['cluster_pred']==group]
     
     head = list((i for (i, v) in Counter(grouped_df['label_mix']).most_common()))
-    ngrams_top, ngrams_full = get_ngrams(grouped_df, df, method=ngrams_method)
+    ngrams_top, ngrams_full = get_ngrams(grouped_df, df)
 
     words_viz = word_visualization(ngrams_full, group, os.path.join('labels', language, clustering_algo+'_'+''.join(inData)+'_'+str(group)+'.json'))
-    #words_viz = word_visualizationV2(ngrams_full, group, os.path.join('labels', language, clustering_algo+'_'+''.join(inData)+'_'+str(group)+'.json'))
     
     return {'head':head[0], 'ngrams':ngrams_top, 'group':group, 'json':words_viz}
-
-
-# def word_visualizationV2(ngrams, file_name):
-    from collections import Counter
-    import networkx as nx
-    import statistics
-    import json
-    
-    bigrams = list((tuple(i.split()) for i in ngrams if len(i.split()) == 2))
-    trigrams = list((tuple(i.split()) for i in ngrams if len(i.split()) == 3))
-
-    bigrams = list(((*num, 2) for item in bigrams for num in (item if isinstance(item, list) else (item,))))
-    trigrams = list(((*num[::len(num)-1],1) for item in trigrams for num in (item if isinstance(item, list) else (item,))))
-
-    df_result = pd.DataFrame(bigrams+trigrams, columns =['word 1', 'word 2', 'weight'])
-    words = list(set(df_result['word 1'].tolist() + df_result['word 2'].tolist()))
-    w_dict = Counter(df_result['word 1'].tolist() + df_result['word 2'].tolist())
-    #print(len(w_dict), w_dict)
-    threshold= statistics.mean(w_dict.values())
-    #print('Number of words: {}, Avg Frequency: {}'.format(len(words), statistics.mean(w_dict.values())))
-    aof = list((i for i in words if w_dict[i] < threshold))
-    #print(len(aof))
-    G = nx.from_pandas_edgelist(df_result,'word 1', 'word 2', edge_attr='weight')
-    G.remove_nodes_from(aof)
-    #print("\nCreation the Tweet Graph: {} Nodes, {} Edges".format(len(G.nodes()), len(G.edges())))
-
-    # Create the basic structure of a force-directed D3 network
-    d3_graph = {
-        'nodes': [],
-        'links': [],
-    }
-
-    # Add each node in the KKG network to the D3 network
-    for node in G.nodes():
-        d3_graph_node = {
-            'id': words.index(str(node)),
-            'tweet': str(node),
-            'group':group
-        }
-        
-        #for centrality_measure in centrality_measures:
-            #d3_graph_node['centrality'][centrality_measure] = centrality_measures[centrality_measure][node]
-        d3_graph['nodes'].append(d3_graph_node)
-
-    # Add each edge in the KKG network to the D3 network
-    for u, v in G.edges():
-            d3_graph['links'].append({
-                    'source': words.index(u), 'target': words.index(v), 'value': G[u][v]['weight']
-                    })
-
-    # Output the network graph in JSON format
-    with open(file_name, 'w') as f:
-        json.dump(d3_graph, f, indent=2)
-    return file_name
 
 def word_visualization(ngrams, group, file_name):
     from collections import Counter
@@ -109,7 +52,6 @@ def word_visualization(ngrams, group, file_name):
     df_result = pd.DataFrame(bigrams+trigrams, columns =['word 1', 'word 2', 'weight'])
     words = list(set(df_result['word 1'].tolist() + df_result['word 2'].tolist()))
     w_dict = Counter(df_result['word 1'].tolist() + df_result['word 2'].tolist())
-    #print(len(w_dict), w_dict)
     threshold= statistics.mean(w_dict.values())
     #print('Number of words: {}, Avg Frequency: {}'.format(len(words), statistics.mean(w_dict.values())))
     aof = list((i for i in words if w_dict[i] < threshold))
@@ -216,6 +158,7 @@ def get_ngrams(df_group, df_global, threshold = 0.001, context_window = 2, top_n
             
         tfs = vectorizer.fit_transform(corpus)
         feature_names = vectorizer.get_feature_names()
+        print('---', len(feature_names))
         dense = tfs.todense()
         denselist = dense.tolist()
         df_result_global = pd.DataFrame(denselist, columns=feature_names)
@@ -237,6 +180,7 @@ def get_ngrams(df_group, df_global, threshold = 0.001, context_window = 2, top_n
         
         tfs_local = vectorizer.fit_transform(corpus_local)
         feature_names = vectorizer.get_feature_names()
+        print('+++', len(feature_names))
         dense = tfs_local.todense()
         denselist = dense.tolist()
         df_result_local = pd.DataFrame(denselist, columns=feature_names)
@@ -259,42 +203,40 @@ def get_ngrams(df_group, df_global, threshold = 0.001, context_window = 2, top_n
                     attrib_to_degree[k] = stats.pearsonr(local, glob)[0]
             ngrams_set = sorted( attrib_to_degree, key=attrib_to_degree.get, reverse=True )[:10]
 
-    if method == 'freq':
+    else:
+
         df_group['clean_tw'] = df_group['clean_tw'].apply(lambda x: cleaning(x))
-
-        vectorizer = CountVectorizer(ngram_range=(2, 3))
-        #vectorizer = TfidfVectorizer(ngram_range=(2, 3), use_idf=False, min_df = 0.05)
-        tfs = vectorizer.fit_transform([' '.join(df_group['clean_tw'].values)])
-        sum_words = tfs.sum(axis=0) 
-
-    if method == 'tfidf':
+        
         corpus = []
-        vectorizer = TfidfVectorizer(ngram_range=(2, 3))
 
-        for name, grouped_df in df_global.groupby(['cluster_pred']):
+        if method == 'freq': 
+            vectorizer = CountVectorizer(ngram_range=(2, 3))
+            #tfidf = TfidfVectorizer(ngram_range=(2, 3), min_df = 0.05, use_idf=False)
+        if method == 'tfidf': 
+            vectorizer = TfidfVectorizer(ngram_range=(2, 3))
+        
+        #print(df)
+        for name, grouped_df in df_group.groupby(['cluster_pred']):
             corpus.append(' '.join(grouped_df['clean_tw'].values))
-
+        #print(corpus)
+        #tfs = tfidf.fit_transform(df['clean_tw'].values)
         tfs = vectorizer.fit_transform(corpus)
-        group = df_group['cluster_pred'].unique().tolist()
-        sum_words = tfs[group[0]].sum(axis=0)
-
-    words_freq = [(word, sum_words[0, idx]) for word, idx in vectorizer.vocabulary_.items()]
-    ngrams_set_full =sorted(words_freq, key = lambda x: x[1], reverse=True)
-
-    ngrams= list((v[0] for v in ngrams_set_full[:top_n]))
-    ngrams_set_top = string_set(ngrams)
-    idx_inf = top_n
-    idx_sup = idx_inf+(top_n-len(ngrams_set_top))
-
-    while len(ngrams_set_top) < top_n:
-        ngrams= list((v[0] for v in ngrams_set_full[idx_inf:idx_sup]))
-        print('ngrams:', ngrams)
-        ngrams= ngrams_set_top+ngrams
-        print('ngrams:', ngrams)
-        ngrams_set_top = list(set(string_set(ngrams)))
-        idx_inf = idx_sup
-        idx_sup = idx_inf +(top_n-len(ngrams_set_top))
-    ngrams_set_full= list((v[0] for v in ngrams_set_full))
+        feature_array = np.array(vectorizer.get_feature_names())
+        tfidf_sorting = np.argsort(tfs.toarray()).flatten()[::-1]
+        
+        for r in tfs.toarray():
+            ngrams_set_full = list((feature_array[i] for i, v in enumerate(r) if v >= np.mean(r)))
+            ngrams = list((feature_array[i] for i in np.argpartition(r, -top_n)[-top_n:]))
+            ngrams_set_top = string_set(ngrams)
+            idx_sup = (len(r)-top_n)
+            idx_inf = (len(r)-top_n)-(top_n-len(ngrams_set_top))
+            
+            while len(ngrams_set_top) < top_n:
+                ngrams = list((feature_array[i] for i in np.argpartition(r, -(len(ngrams_set_top)-(len(r)-top_n)))[idx_inf: idx_sup]))
+                ngrams = ngrams_set_top + ngrams
+                ngrams_set_top = list(set(string_set(ngrams)))
+                idx_sup = idx_inf
+                idx_inf = idx_sup -(top_n-len(ngrams_set_top))
     return ngrams_set_top, ngrams_set_full
 
 def get_archive(file_path, dir_mat):
@@ -322,17 +264,16 @@ def graph_generator(lang, views):
     
     tw_db = pd.read_csv(goldFile, index_col=False)
     views = views.split('-')
-    print(views)
     clustering_algo = views[0]
 
     dir_mat = 'matrices/'+language+'/'
     
     matrices = []
     matrices_type = [] #False feature set / True feature set
-    print(views[1])
+
     inData = views[1].split('_')
     view_type = 'im'
-    print('-----',views, inData)
+    
     if 'bert' in inData:
         if clustering_algo == 'kmeans' or clustering_algo == 'sc' : view_type = 'im'
         get_archive(glob.glob(dir_mat+'EM-*bert.tar.gz')[0], dir_mat)
@@ -464,4 +405,3 @@ def get_network(G, data, partitions, lang, name):
 
     print("\nThe JSON file with the Twitter network was created...")
     return os.path.join('json', lang, name+'.json')
-
