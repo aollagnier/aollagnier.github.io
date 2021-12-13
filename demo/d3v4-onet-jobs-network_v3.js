@@ -1,3 +1,30 @@
+function generate_ngrams_list(group, ngrams_method){
+    //fetch('http://127.0.0.1:5000/api/characterization/'+group+'/'+ngrams_method)
+    fetch('http://134.59.134.227:8080/api/'+group+'/'+ngrams_method)
+    .then(async function(response) {
+        const text = await response.text();
+        console.log(text);
+        data = JSON.parse(text);
+        var json_file_words = data['json']
+
+        document.getElementById('json_file_words').value = ''
+        document.getElementById('json_file_words').value = json_file_words
+        
+        document.getElementById("community_title").innerHTML = data['head'];
+
+        var ul = document.getElementById("ngrams");
+        ul.innerHTML = "";
+
+        for (let i of data['ngrams']) {
+            let li = document.createElement("li");
+            li.innerHTML = i;
+            ul.appendChild(li);
+        }
+
+    })
+    
+}
+
 function createJobsNetwork_onet(svg, graph) {
     d3v4 = d3;
 
@@ -107,7 +134,7 @@ function createJobsNetwork_onet(svg, graph) {
         .style("stroke", function(d) {return color(d.group)});
 
         let neighbors = links.filter(e => e.source.index === d.index || e.target.index === d.index).map(e => e.source.index === d.index ? e.target.index : e.source.index)
-        console.log(neighbors)
+
         d3.selectAll('circle.node')
             .style('opacity', e => { return e.index === d.index || neighbors.includes(e.index) ? 1 : 0.2})
 
@@ -117,29 +144,16 @@ function createJobsNetwork_onet(svg, graph) {
 
         var selector = document.getElementById('community_div');
         selector.style.display="block";
-        d.group = 4;
-        fetch('http://127.0.0.1:5000/api/characterization/'+d.group)
-        .then(async function(response) {
-            const text = await response.text();
-            console.log(text);
-            data = JSON.parse(text);
-            var jsontoto = data['json']
+        //d.group = 4;
 
-            document.getElementById('tototo').value = ''
-            document.getElementById('tototo').value = jsontoto
-            
-            document.getElementById("community_title").innerHTML = data['head'];
+        method_ngrams = document.getElementById('method-ngrams').value
+        
 
-            var ul = document.getElementById("ngrams");
-            ul.innerHTML = "";
+        document.getElementById('cluster_group').value = ''
+        document.getElementById('cluster_group').value = d.group
+        generate_ngrams_list(d.group, method_ngrams);
 
-            for (let i of data['ngrams']) {
-                let li = document.createElement("li");
-                li.innerHTML = i;
-                ul.appendChild(li);
-            }
-
-        })
+        
         
         //nodeGrowing(d);
     })
@@ -186,13 +200,12 @@ function createJobsNetwork_onet(svg, graph) {
     
     var simulation = d3v4.forceSimulation()
         .force("link", d3v4.forceLink()
-                .id(function(d) { return d.id; })
-                .distance(function(d) { 
-                    return 15;
-                    return dist; 
+        .id((d)=>{ return d.id; })
+        .distance(function(d) { 
+                    return 50;
                 })
               )
-        .force("charge", d3v4.forceManyBody())
+        .force("charge", d3v4.forceManyBody().strength(-100).distanceMax(200))
         .force("center", d3v4.forceCenter(parentWidth / 2, parentHeight / 2))
         .force("x", d3v4.forceX())
         .force("y", d3v4.forceY().strength(function(d){ return .30 }));
@@ -237,7 +250,6 @@ function createJobsNetwork_onet(svg, graph) {
             //onClickParent(this.__data__.job_role)
         }
         else {
-            console.log('prout');
             d3.select(this).classed("network-selected", false);
             d3.select(this).transition().attr("class", "noselected");
         }
