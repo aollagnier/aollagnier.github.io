@@ -69,7 +69,7 @@ function createWordsNetwork(svg, graph) {
         //.attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
     var default_node_size_onet = 6,
-        default_node_size_over = 10;
+        default_node_size_over = 8;
 
     graph.links.forEach(function(link){
 
@@ -85,7 +85,8 @@ function createWordsNetwork(svg, graph) {
     let sizeScale = d3.scaleLinear()
         .domain(d3.extent(graph.nodes, d => d.linkCount))
         .range([5, 20])
-    
+
+
     var node = gDraw.append("g")
         .attr("class", "node")
         .selectAll("circle")
@@ -125,13 +126,12 @@ function createWordsNetwork(svg, graph) {
 
 	.on("click",function(d,i){
         d3.select(this)
-        .attr("r", function(d){return default_node_size_onet})
         .style("stroke", function(d) {return color(d.group)});
 
         let neighbors = links.filter(e => e.source.index === d.index || e.target.index === d.index).map(e => e.source.index === d.index ? e.target.index : e.source.index)
-        console.log(neighbors)
+
         d3.selectAll('circle.node')
-            .style('opacity', e => { return e.index === d.index || neighbors.includes(e.index) ? 1 : 0.2})
+            .style('opacity', e => { return e.index === d.index || neighbors.includes(e.index) ? 1 : 0.1})
 
         d3.selectAll('.node-links')
             .style('opacity', e => e.source.index === d.index || e.target.index === d.index ? 1 : 0.1)
