@@ -1,0 +1,44 @@
+[
+    {
+        "img": "posters/bonaldi_poster.pdf",
+        "title": "A Dialogue Dataset for Hate Speech Countering",
+        "authors": "",
+        "description": "Description for Image 1"
+    },
+    {
+        "img": "posters/EACL 2023 - POSTER - An In-depth Analysis of Implicit and Subtle Hate Speech Messages.pdf",
+        "title": "An In-depth Analysis of Implicit and Subtle Hate Speech Messages.",
+        "authors": "Nicolas Benjamin Ocampo, Ekaterina Sviridova, Elena Cabrio, and Serena Villata",
+        "description": "The research carried out so far in detecting abusive content in social media has primarily focused on overt forms of hate speech. While explicit hate speech (HS) is more easily identifiable by recognizing hateful words, messages containing linguistically subtle and implicit forms of HS (as circumlocution, metaphors and sarcasm) constitute a real challenge for automatic systems. While the sneaky and tricky nature of subtle messages might be perceived as less hurtful with respect to the same content expressed clearly, such abuse is at least as harmful as overt abuse. In this paper, we first provide an in-depth and systematic analysis of 7 standard benchmarks for HS detection, relying on a fine-grained and linguistically-grounded definition of implicit and subtle messages. Then, we experiment with state-of-the-art neural network architectures on two supervised tasks, namely implicit HS and subtle HS message classification. We show that while such models perform satisfactory on explicit messages, they fail to detect implicit and subtle content, highlighting the fact that HS detection is not a solved problem and deserves further investigation."
+    },
+    {
+        "img": "posters/goffredo.pdf",
+        "title": "Argument-based Detection and Classification of Fallacies in Political Debates",
+        "authors": "Pierpaolo Goffredo, Mariana Chaves Espinoza, Elena Cabrio, Serena Villata",
+        "description": "Fallacious arguments are often used in political debates to mislead, detecting and classifying fallacies is an important open challenge in Argument Mining (AM) and NLP research to limit their potential harmful influence. Our contribution is twofold: (1) Extension of the dataset ElecDeb60to16 and (2) Transformer-based model for detecting and classifying fallacies in political debates. Our results show the advantages of complementing transformer-generated text representations with non-textual features."
+    },
+    {
+        "img": "posters/grammar_net_poster.pdf",
+        "title": "Constituency Tree Representation for Argument Unit Recognition",
+        "authors": "Samuel Guilluy, Florian Méhats and Billal Chouli",
+        "description": "Description for Image 1"
+    },
+    {
+        "img": "posters/molinet.pdf",
+        "title": "ACTA 2.0: A Modular Architecture for Multi-Layer Argumentative Analysis of Clinical Trials",
+        "authors": "Benjamin Molinet, Santiago Marro, Elena Cabrio, Serena Villata, Tobias Mayer, Cristian Cardellino",
+        "description": "Evidence-based medicine aims at making decisions about the care of individual patients based on the explicit use of the best available evidence in the patient clinical history and the medical literature results. Argumentation represents a natural way of addressing this task by (i) identifying evidence and claims in text, and (ii) reasoning upon the extracted arguments and their relations to make a decision. ACTA 2.0 is an automated tool which relies on Argument Mining methods to analyse the abstracts of clinical trials to extract argument components and relations to support evidence-based clinical decision making. ACTA 2.0 allows also for the identification of PICO (Patient, Intervention, Comparison, Outcome) elements, and the analysis of the effects of an intervention on the outcomes of the study. A REST API is also provided to exploit the tool's functionalities."
+    },
+    {
+        "img": "posters/poster30April2022Portrait.pdf",
+        "title": "Fallacious Argument Classification In Political Debates",
+        "authors": "Pierpaolo Goffredo, Elena Cabrio, Serena Villata, Shohreh Haddadan, Vorakit Vorakitphan",
+        "description": ""
+    },
+    {
+        "img": "posters/xiaoou.pdf",
+        "title": "Argument and Counter-argument Generation: a Critical Survey",
+        "authors": "Wang Xiaoou, Elena Cabrio, Serena Villata",
+        "description": ""
+    }
+]
