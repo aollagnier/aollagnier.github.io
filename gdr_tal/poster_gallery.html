@@ -5,22 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poster Gallery</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
     <div class="header">
-        <h1 class="journée GdR TAL et GdR RADIA: Poster Gallery">My Fancy Image Gallery</h1>
+        <h1 class="fancy-title">journée GdR TAL et GdR RADIA: Poster Gallery</h1>
     </div>
 
-<div class="gallery">
-    <!-- Gallery items will be dynamically added here -->
-</div>
-
-<div id="modal" class="modal">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modalImage">
-    <div id="caption"></div>
-</div>
+    <div class="gallery" id="pdfGallery">
+        <!-- Gallery items will be dynamically added here -->
+    </div>
+    
+    <div id="modal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-header">
+            <img class="miniature" id="miniatureImg" alt="">
+            <div id="caption"></div>
+        </div>
+        <iframe class="modal-content" id="modalPDF" frameborder="0"></iframe>
+    </div>
+    
 
 <script src="script.js"></script>
 </body>

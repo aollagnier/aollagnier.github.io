@@ -3,7 +3,7 @@
         "img": "posters/bonaldi_poster.pdf",
         "title": "A Dialogue Dataset for Hate Speech Countering",
         "authors": "",
-        "description": "Description for Image 1"
+        "description": "Counter narratives have emerged as an effective tool employed by NGOs to respond to online hate on social media platforms, leading to the exploration of Natural Language Generation for automated counter narrative writing. However, existing counter narrative datasets are limited to 2-turn interactions, while in real life, interactions can consist of multiple turns. In this paper, we present a dialogical data collection approach, which combines the intervention of human expert annotators over machine-generated dialogues. The result is DIALOCONAN, the first dataset with over 3000 fictitious dialogues between a hater and an NGO operator, covering 6 targets of hate."
     },
     {
         "img": "posters/EACL 2023 - POSTER - An In-depth Analysis of Implicit and Subtle Hate Speech Messages.pdf",
@@ -15,8 +15,7 @@
         "img": "posters/goffredo.pdf",
         "title": "Argument-based Detection and Classification of Fallacies in Political Debates",
         "authors": "Pierpaolo Goffredo, Mariana Chaves Espinoza, Elena Cabrio, Serena Villata",
-        "description": "Fallacious arguments are often used in political debates to mislead, detecting and classifying fallacies is an important open challenge in Argument Mining (AM) and NLP research to limit their potential harmful influence. Our contribution is twofold: (1) Extension of the dataset ElecDeb60to16 and (2) Transformer-based model for detecting and classifying fallacies in political debates. Our results show the advantages of complementing transformer-generated text representations with non-textual features."
-    },
+        "description": "Fallacies are arguments that employ faulty reasoning. Given their persuasive and seemingly valid nature, fallacious arguments are often used in political debates. Employing these misleading arguments in politics can have detrimental consequences for society, since they can lead to inaccurate conclusions and invalid inferences from the public opinion and the policymakers. Automatically detecting and classifying fallacious arguments represents therefore a crucial challenge to limit the spread of misleading or manipulative claims and promote a more informed and healthier political discourse. Our contribution to address this challenging task is twofold. First, we extend the ElecDeb60To16 dataset of U.S. presidential debates annotated with fallacious arguments, by incorporating the most recent Trump-Biden presidential debate. We include updated token-level annotations, incorporating argumentative components (i.e., claims and premises), the relations between these components (i.e., support and attack), and six categories of fallacious arguments (i.e., Ad Hominem, Appeal to Authority, Appeal to Emotion, False Cause, Slippery Slope, and Slogans). Second, we perform the twofold task of fallacious argument detection and classification by defining neural network architectures based on Transformers models, combining text, argumentative features, and engineered features. Our results show the advantages of complementing transformer-generated text representations with non-textual features."},
     {
         "img": "posters/grammar_net_poster.pdf",
         "title": "Constituency Tree Representation for Argument Unit Recognition",
@@ -33,7 +32,7 @@
         "img": "posters/poster30April2022Portrait.pdf",
         "title": "Fallacious Argument Classification In Political Debates",
         "authors": "Pierpaolo Goffredo, Elena Cabrio, Serena Villata, Shohreh Haddadan, Vorakit Vorakitphan",
-        "description": ""
+        "description": "Fallacies play a prominent role in argumentation since antiquity due to their contribution to argumentation in critical thinking education. Their role is even more crucial nowadays as contemporary argumentation technologies face challenging tasks as misleading and manipulative information detection in news articles and political discourse, and counter-narrative generation. Despite some work in this direction, the issue of classifying arguments as being fallacious largely remains a challenging and an unsolved task. Our contribution is twofold: first, we present a novel annotated resource of 31 political debates from the U.S. Presidential Campaigns, where we annotated six main categories of fallacious arguments (i.e., ad hominem, appeal to authority, appeal to emotion, false cause, slogan, slippery slope) leading to 1628 annotated fallacious arguments; second, we tackle this novel task of fallacious argument classification and we define a neural architecture based on transformers outperforming state-of-the-art results and standard baselines. Our results show the important role played by argument components and relations in this task"
     },
     {
         "img": "posters/xiaoou.pdf",

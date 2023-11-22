@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Fetch JSON data
-    fetch('poster-db.json')
+    fetch('gallery.json')
         .then(response => response.json())
         .then(data => {
-            // Populate the gallery
-            const gallery = document.querySelector('.gallery');
+            const gallery = document.getElementById('pdfGallery');
             data.forEach(item => {
                 const img = document.createElement('img');
                 img.src = item.img;
@@ -15,16 +14,16 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-    // Get modal elements
     const modal = document.getElementById('modal');
-    const modalImage = document.getElementById('modalImage');
+    const modalPDF = document.getElementById('modalPDF');
+    const miniatureImg = document.getElementById('miniatureImg');
     const caption = document.getElementById('caption');
     const closeBtn = document.getElementsByClassName('close')[0];
 
-    // Open modal
     function openModal(item) {
         modal.style.display = 'block';
-        modalImage.src = item.img;
+        modalPDF.src = item.img;
+        miniatureImg.src = item.img; // Set the miniature image source
         caption.innerHTML = `<h2>${item.title}</h2>`;
         if (item.authors) {
             caption.innerHTML += `<p><strong>Authors:</strong> ${item.authors}</p>`;
@@ -34,13 +33,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Close modal
-    closeBtn.addEventListener('click', () => modal.style.display = 'none');
+    window.closeModal = function() {
+        modal.style.display = 'none';
+    };
 
-    // Close modal on outside click
     window.addEventListener('click', (event) => {
         if (event.target === modal) {
-            modal.style.display = 'none';
+            closeModal();
         }
     });
 });
