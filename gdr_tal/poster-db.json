@@ -39,6 +39,6 @@
         "img": "posters/xiaoou.pdf",
         "title": "Argument and Counter-argument Generation: a Critical Survey",
         "authors": "Wang Xiaoou, Elena Cabrio, Serena Villata",
-        "description": ""
+        "description": "Argument Generation (AG) is becoming an increasingly active research topic in Natural Language Processing (NLP), and a wide variety of terms has been used to highlight different aspects and methods of AG such as argument construction, argument retrieval, argument synthesis and argument summarization, producing a vast literature. This article aims to draw a comprehensive picture of the literature concerning argument generation and counter-argument generation (CAG). Despite the increasing interest on this topic, no attempt has been made yet to critically review the diverse and rich literature in AG and CAG. By confronting works from the relevant subareas of NLP, we provide a holistic vision that is essential for future works aiming to produce understandable, convincing and ethically sound arguments and counter-arguments."
     }
 ]

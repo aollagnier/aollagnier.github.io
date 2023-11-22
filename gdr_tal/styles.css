@@ -4,6 +4,19 @@ body {
     padding: 0;
 }
 
+.header {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+.fancy-title {
+    font-family: 'Pacifico', cursive; /* Example: Google Fonts - Pacifico */
+    font-size: 2em;
+    margin: 0;
+}
+
 .gallery {
     display: flex;
     flex-wrap: wrap;

@@ -25,7 +25,13 @@ document.addEventListener('DOMContentLoaded', function () {
     function openModal(item) {
         modal.style.display = 'block';
         modalImage.src = item.img;
-        caption.textContent = `${item.title} - ${item.description}`;
+        caption.innerHTML = `<h2>${item.title}</h2>`;
+        if (item.authors) {
+            caption.innerHTML += `<p><strong>Authors:</strong> ${item.authors}</p>`;
+        }
+        if (item.description) {
+            caption.innerHTML += `<p>${item.description}</p>`;
+        }
     }
 
     // Close modal
