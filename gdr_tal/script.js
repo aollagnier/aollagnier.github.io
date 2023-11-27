@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const gallery = document.getElementById('pdfGallery');
             data.forEach(item => {
                 const img = document.createElement('img');
-                img.src = item.img;
+                img.src = item.img.replace("posters", "img").replace(".pdf", ".jpg");
                 img.alt = item.title;
                 img.title = item.title;
                 img.addEventListener('click', () => openModal(item));
