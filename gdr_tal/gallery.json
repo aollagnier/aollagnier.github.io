@@ -81,5 +81,12 @@
         "authors": "Anas Belfathi, Richard Dufour, Nicolas Hernandez, Christine Jacquin, Laura Monceaux",
         "category": "Resource",
         "description": "Lexhnology ANR Project. Support the research for similar cases, understand sucessful reasoning, make it easier to read the full text, improve the ability to understand legal texts..."
-    }
+    },
+    {
+        "img": "posters/nice_poster_final.pdf",
+        "title": "Argument Mining with Customized and Feature-Injected Large Language Models",
+        "authors": "Umer Mushtaq",
+        "category": "Application",
+        "description": ""}
+]
 ]
