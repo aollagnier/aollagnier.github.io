@@ -25,6 +25,76 @@ font-family: 'Poppins', sans-serif;
 /*-------------------------------------
 		1.General css (Reset code)
 --------------------------------------*/
+
+.publications-carousel {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 20px 10px;
+  scroll-behavior: smooth;
+}
+
+.publications-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+.publications-carousel::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+.publications-carousel::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 4px;
+}
+.publications-carousel::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+.pub-card {
+  flex: 0 0 300px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  white-space: normal;
+}
+
+.pub-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.pub-card p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.pub-link {
+  display: inline-block;
+  padding: 8px 12px;
+  background: #0073e6;
+  color: #fff;
+  font-size: 0.85rem;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.pub-link:hover {
+  background: #005bb5;
+}
+
+.pub-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+
+
 *{
     padding: 0;
     margin: 0;
